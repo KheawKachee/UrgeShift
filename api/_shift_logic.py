@@ -199,10 +199,12 @@ def llm_recommend_action(payload):
             {
                 "role": "system",
                 "content": (
-                    "You are UrgeShift's stateless crisis-aware intervention selector. "
-                    "Return only JSON. Do not include markdown. Do not store, recall, or ask for identity. "
-                    "Choose one safe next action for a low-energy user. Avoid therapy language. "
-                    "Use Thai-English UX copy. Output schema: "
+                    "คุณคือระบบเลือกก้าวถัดไปของ UrgeShift แบบไม่มีความจำระยะยาว "
+                    "ให้ตอบเป็น JSON เท่านั้น ห้ามใส่ markdown ห้ามเก็บหรือถามข้อมูลระบุตัวตน "
+                    "เลือกก้าวถัดไปที่ปลอดภัยขึ้นและใช้แรงน้อยสำหรับผู้ใช้ที่พลังต่ำ "
+                    "หลีกเลี่ยงภาษาการรักษา ข้อความของ action ให้เป็นภาษาไทยเป็นหลัก "
+                    "จะมีอังกฤษสั้นมากเฉพาะจำเป็นเท่านั้น "
+                    "รูปแบบผลลัพธ์: "
                     '{"action":{"mode":"...","text":"...","subtext":"..."},"reason":"..."}'
                 ),
             },
@@ -213,10 +215,10 @@ def llm_recommend_action(payload):
                         "available_action_examples": ACTIONS,
                         "current_signal": safe_payload,
                         "constraints": [
-                            "The action must be low effort.",
-                            "If the user needs a person or safety risk is implied, route to crisis/person support.",
-                            "If user says they will do it anyway, use harm reduction.",
-                            "No judgment, no diagnosis, no persistence.",
+                            "action ต้องใช้แรงน้อย",
+                            "ถ้าผู้ใช้ต้องการคนหรือมีสัญญาณเสี่ยง ให้ไปทาง crisis/person support",
+                            "ถ้าผู้ใช้บอกว่าจะทำอยู่ดี ให้ใช้ harm reduction",
+                            "ห้ามตัดสิน ห้ามวินิจฉัย ห้ามอ้างว่ามีความจำระยะยาว",
                         ],
                     },
                     ensure_ascii=False,
@@ -250,10 +252,11 @@ def llm_buddy_draft(payload=None):
             {
                 "role": "system",
                 "content": (
-                    "You write UrgeShift buddy bridge drafts. Return only JSON. "
-                    "Do not auto-send, do not ask for identity, and do not mention stored data. "
-                    "Draft should be short, natural, not embarrassing, and bilingual English + Thai. "
-                    'Output schema: {"draft":"..."}'
+                    "คุณเขียนข้อความร่าง Buddy Bridge ของ UrgeShift ให้ตอบเป็น JSON เท่านั้น "
+                    "ห้าม auto-send ห้ามถามข้อมูลระบุตัวตน และห้ามพูดถึงข้อมูลที่เก็บไว้ "
+                    "ข้อความต้องสั้น เป็นธรรมชาติ ไม่ชวนอาย และให้เป็นภาษาไทยเป็นหลัก "
+                    "จะมีอังกฤษสั้นมากต่อท้ายได้ถ้าจำเป็น "
+                    'รูปแบบผลลัพธ์: {"draft":"..."}'
                 ),
             },
             {
@@ -262,10 +265,10 @@ def llm_buddy_draft(payload=None):
                     {
                         "goal": "Ask a trusted person to stay with the user by chat for 10 minutes.",
                         "constraints": [
-                            "No lecture.",
-                            "No diagnosis.",
-                            "No pressure to explain.",
-                            "Keep user in control.",
+                            "ห้ามสอนหรือเทศนา",
+                            "ห้ามวินิจฉัย",
+                            "ห้ามกดดันให้ต้องอธิบาย",
+                            "ให้ผู้ใช้ยังเป็นคนคุมสถานการณ์",
                         ],
                     },
                     ensure_ascii=False,
@@ -290,10 +293,10 @@ def llm_crisis_status(text):
             {
                 "role": "system",
                 "content": (
-                    "Classify an UrgeShift safety signal. Return only JSON. "
-                    "Valid status values: safe, needs_person, crisis. "
-                    "Use crisis only for self-harm, suicide, overdose, or inability to stay safe. "
-                    'Output schema: {"status":"safe|needs_person|crisis"}'
+                    "จำแนกสัญญาณความปลอดภัยของ UrgeShift ให้ตอบเป็น JSON เท่านั้น "
+                    "ค่า status ที่ใช้ได้คือ safe, needs_person, crisis "
+                    "ใช้ crisis เฉพาะเมื่อมีความเสี่ยงเรื่องทำร้ายตัวเอง ฆ่าตัวตาย overdose หรือไม่สามารถอยู่ให้ปลอดภัยได้ "
+                    'รูปแบบผลลัพธ์: {"status":"safe|needs_person|crisis"}'
                 ),
             },
             {

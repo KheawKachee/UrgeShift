@@ -2,7 +2,7 @@ Status: ready-for-agent
 
 ## What to build
 
-Add a shared bottom tab bar across the top-level app routes and remove page-specific route-navigation clusters. The tab bar should expose `Shift`, `ธูติ`, `Preview`, `Plans`, and `Progress`, and should visually unify the current routes into one product flow.
+Add a shared bottom tab bar across the top-level app routes and remove page-specific route-navigation clusters. The tab bar should expose `Shift`, `ภูติ`, `Preview`, `Plans`, and `Progress`, and should visually unify the current routes into one product flow.
 
 ## Acceptance criteria
 

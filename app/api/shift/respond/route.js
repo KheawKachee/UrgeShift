@@ -14,11 +14,9 @@ export async function POST(request) {
   const body = await readJson(request);
   const result = respondToShift(body);
   const response = body.response || body.action || "next";
-  const SAFETY_CATEGORIES = ["harm-reduction", "support", "human-care"];
   const shouldAskLlm =
     !result.safety?.crisis &&
     !body.selectedOption &&
-    !SAFETY_CATEGORIES.includes(result.action?.category) &&
     !["done", "helped", "stop", "person"].includes(response);
 
   if (!shouldAskLlm) {

@@ -2,7 +2,7 @@ Status: ready-for-agent
 
 ## What to build
 
-Add a `Progress` route that introduces Hardcore Mode on-device: Local Name, current `ธูติ` context when available, a three-step Scheduled Check-In flow, a supportive Progress Board, and a collapsible Demo Metrics section for judges.
+Add a `Progress` route that introduces Hardcore Mode on-device: Local Name, current `ภูติ` context when available, a three-step Scheduled Check-In flow, a supportive Progress Board, and a collapsible Demo Metrics section for judges.
 
 ## Acceptance criteria
 

@@ -1,22 +1,45 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import AppTabBar from "./components/AppTabBar";
 import BrandHeader from "./components/BrandHeader";
-import ContextPanel from "./components/ContextPanel";
-import IdleScreen from "./components/IdleScreen";
 import PhoneShell from "./components/PhoneShell";
-import SavedPlanPanel from "./components/SavedPlanPanel";
 import SessionScreen from "./components/SessionScreen";
-import StateBoard from "./components/StateBoard";
-import { createPlanPreview, respondToShift, startShiftSession } from "./lib/shiftApi";
+import { recordHardcoreEvent, syncSpiritFromContext } from "./lib/hardcore";
+import {
+  createPlanPreview,
+  fetchBuddyDraft,
+  recommendShift,
+  respondToShift,
+  startShiftSession,
+} from "./lib/shiftApi";
 import { actions, buddyDraft, crumbSteps, normalize } from "./lib/urgeshift";
 
 const defaultContext = {
-  name: "",
-  place: "",
-  situation: "",
+  name: "Mint",
+  place: "หน้าร้านสะดวกซื้อ กรุงเทพฯ",
+  situation: "เลิกงานดึก เครียดมาก อยากดื่ม ไม่อยากอธิบาย",
 };
+
+function readHelperSpiritContext() {
+  if (typeof window === "undefined" || typeof window.sessionStorage === "undefined") {
+    return {};
+  }
+
+  try {
+    const raw = window.sessionStorage.getItem("urgeshift-user-context");
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return {
+      helperSpiritId: parsed?.result?.id || "unknown",
+      helperSpiritTitle: parsed?.result?.title || "",
+      helperSpiritOneLine: parsed?.result?.oneLine || "",
+      helperSpiritLlmContext: parsed?.result?.llmContext || "",
+    };
+  } catch {
+    return {};
+  }
+}
 
 function getTimeContext(date = new Date()) {
   const hour = date.getHours();
@@ -90,6 +113,7 @@ export default function Home() {
   useEffect(() => {
     const stored = window.sessionStorage.getItem("urgeshift-plan");
     if (stored) setSavedPlan(stored);
+    syncSpiritFromContext();
   }, []);
 
   useEffect(() => {
@@ -105,6 +129,7 @@ export default function Home() {
   }, [active, seconds]);
 
   function snapshotContext(overrides = {}) {
+    const helperSpirit = readHelperSpiritContext();
     return {
       sessionId,
       name: currentContext.name,
@@ -113,6 +138,7 @@ export default function Home() {
       socialState: "unknown",
       triggerLabel: "urge moment",
       typedSignal: currentContext.situation,
+      situationSummary: currentContext.situation || "unknown",
       urge,
       energy,
       blocker,
@@ -121,6 +147,7 @@ export default function Home() {
       lastActionCategory: currentAction.category || "unknown",
       avoidActionTexts: currentAction?.text ? [currentAction.text] : [],
       avoidCategories: currentAction?.category ? [currentAction.category] : [],
+      ...helperSpirit,
       ...inferContextFromSituation(currentContext.situation || ""),
       ...overrides,
     };
@@ -173,6 +200,7 @@ export default function Home() {
     setMode("first move");
     hidePanels();
     applyAction(actions.first);
+    recordHardcoreEvent("session_started", { source: "shift" });
 
     setApiBusy(true);
     try {
@@ -257,7 +285,9 @@ export default function Home() {
     if (step >= crumbSteps.length) applyAction(actions.water);
   }
 
-  function showBuddyBridge() {
+  async function showBuddyBridge() {
+    const draft = await fetchBuddyDraft(buddyDraftText || buddyDraft);
+    setBuddyDraftText(draft);
     setBuddyVisible(true);
     setMode("buddy bridge");
   }
@@ -291,7 +321,7 @@ export default function Home() {
     );
 
     if (value.includes("Need person") || data?.action?.mode === "Buddy Bridge") {
-      showBuddyBridge();
+      await showBuddyBridge();
       return;
     }
 
@@ -316,6 +346,7 @@ export default function Home() {
       } else {
         await askToSavePlan(currentAction.text);
       }
+      recordHardcoreEvent("session_completed", { source: "shift", result: "done" });
     }
 
     if (action === "too-hard") {
@@ -332,7 +363,7 @@ export default function Home() {
 
     if (action === "person") {
       await requestShift("person", { blocker: "need person" });
-      showBuddyBridge();
+      await showBuddyBridge();
     }
 
     if (action === "anyway") {
@@ -342,6 +373,7 @@ export default function Home() {
         readiness: "low",
       });
       showHarmReduction();
+      recordHardcoreEvent("session_completed", { source: "shift", result: "harm-reduction" });
     }
 
     if (action === "stop") {
@@ -349,6 +381,7 @@ export default function Home() {
       setSessionStatus("stopped");
       applyAction(actions.stopped);
       hidePanels();
+      recordHardcoreEvent("session_stopped", { source: "shift" });
       await requestShift("stop", {}, {}, { applyActionCard: false });
     }
   }
@@ -377,15 +410,16 @@ export default function Home() {
         id: Date.now(),
         text: planPreview,
         cadence: "daily",
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       },
-      ...plans
+      ...plans,
     ];
     window.sessionStorage.setItem("urgeshift-plans", JSON.stringify(nextPlans));
     window.sessionStorage.setItem("urgeshift-plan", planPreview);
     setSavedPlan(planPreview);
     setSaveVisible(false);
     setSessionStatus("session plan ready");
+    recordHardcoreEvent("plan_saved", { text: planPreview, cadence: "daily" });
   }
 
   function clearPlan() {
@@ -415,8 +449,15 @@ export default function Home() {
     showCrumbs(crumbStep ?? 0);
   }
 
+  function guardNavigation(href) {
+    if (!active || href === "/") return true;
+    return window.confirm("กำลังอยู่ในช่วงช่วยพยุงใจ\nจะออกจาก session นี้ไหม");
+  }
+
   return (
     <main className="stage" data-state={active ? "active" : "idle"}>
+      <AppTabBar beforeNavigate={guardNavigation} />
+
       <section className="left-pane" aria-label="UrgeShift session">
         <BrandHeader />
         <PhoneShell status={apiBusy ? "shaping move" : sessionStatus} active={active}>
@@ -433,11 +474,6 @@ export default function Home() {
               <p className="privacy-note">
                 ข้อมูลของผู้ใช้ จะหายไปหลังจากออกแอพโดยอัตโนมัติ
               </p>
-              <div className="link-row">
-                <Link className="text-link" href="/context">ทำ quiz สั้นๆ / Context quiz</Link>
-                <Link className="text-link" href="/preview">ดูตัวเราที่ค่อยๆ กลับมา / Preview</Link>
-                <Link className="text-link" href="/plans">ดูแผนที่บันทึกไว้ / Saved plans</Link>
-              </div>
             </section>
           ) : (
             <SessionScreen
@@ -504,9 +540,6 @@ export default function Home() {
         <section className="saved-plan">
           <p className="tiny-label">แผนที่บันทึก / Saved plan</p>
           <div>{savedPlan}</div>
-          <Link className="text-link" href="/context">อัปเดตพื้นหลัง / Context quiz</Link>
-          <Link className="text-link" href="/preview">ดู Better Self Preview</Link>
-          <Link className="text-link" href="/plans">เปิดแผนทั้งหมด / Open plans</Link>
           <button type="button" onClick={clearPlan}>ล้างแผน</button>
         </section>
       </aside>

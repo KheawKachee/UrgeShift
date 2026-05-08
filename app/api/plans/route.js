@@ -21,7 +21,10 @@ export async function POST(request) {
   const result = await createPlanWithLlm({
     ...body,
     fallbackPlanResponse,
-    context: fallbackPlanResponse.context || body.context,
+    context: {
+      ...(body.context || {}),
+      ...(fallbackPlanResponse.context || {}),
+    },
   });
 
   return NextResponse.json(result);

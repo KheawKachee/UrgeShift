@@ -5,37 +5,37 @@ import AppTabBar from "../components/AppTabBar";
 
 const profiles = {
   spark: {
-    title: "ธูติประกายไฟ",
+    title: "ภูติประกายไฟ",
     tone: "คิดทีหลัง ขยับก่อน",
     encourage: "ไม่ต้องชนะทั้งคืน แค่ขยับออกจากจุดเดิมก่อน",
     color: "ember"
   },
   mist: {
-    title: "ธูติหมอกนุ่ม",
+    title: "ภูติหมอกนุ่ม",
     tone: "อย่าเร่งฉัน เดี๋ยวฉันกลับมาเอง",
     encourage: "ลดเสียงทุกอย่างลงก่อน ไม่ต้องรีบเก่ง",
     color: "mist"
   },
   sprout: {
-    title: "ธูติต้นกล้า",
+    title: "ภูติต้นกล้า",
     tone: "ร่างกายนิ่ง ใจค่อยตาม",
     encourage: "จับร่างกายไว้กับพื้น น้ำ ลมหายใจ และก้าวเล็กๆ",
     color: "sprout"
   },
   water: {
-    title: "ธูติน้ำใจ",
+    title: "ภูติน้ำใจ",
     tone: "ค่อยๆ รู้ทัน แล้วค่อยเลือก",
     encourage: "แค่รู้ว่าตอนนี้ใจเป็นอะไร ก็ช่วยให้ค่อยๆ ไปต่อได้",
     color: "water"
   },
   wind: {
-    title: "ธูติลมเย็น",
+    title: "ภูติลมเย็น",
     tone: "เอาให้ง่ายไว้ก่อน",
     encourage: "ไม่ต้องทำหลายอย่าง เอาแค่ก้าวที่ไหวตอนนี้ก็พอ",
     color: "wind"
   },
   light: {
-    title: "ธูติแสงดาว",
+    title: "ภูติแสงดาว",
     tone: "ไม่ต้องแก้ แค่อยู่ด้วย",
     encourage: "พูดไม่เก่ง แต่จะอยู่เป็นเพื่อนนะ",
     color: "light"
@@ -47,7 +47,7 @@ const stages = [
     id: "now",
     label: "ตอนนี้",
     action: "วางแรงกดลงก่อน",
-    line: "ธูติอยู่ข้างๆ เงียบๆ ไม่ต้องรีบอธิบาย ไม่ต้องรีบร้อน"
+    line: "ภูติอยู่ข้างๆ เงียบๆ ไม่ต้องรีบอธิบาย ไม่ต้องรีบร้อน"
   },
   {
     id: "10mins",
@@ -100,6 +100,8 @@ export default function PreviewPage() {
   return (
     <main className="preview-page">
       <section className="preview-shell">
+        <AppTabBar />
+
         <section className="preview-hero">
           <p className="eyebrow">Better Self Preview</p>
           <h1>ตัวเราที่ค่อยๆ กลับมาคุมได้</h1>
@@ -140,8 +142,6 @@ export default function PreviewPage() {
             ))}
           </div>
         </section>
-
-        <AppTabBar />
       </section>
     </main>
   );

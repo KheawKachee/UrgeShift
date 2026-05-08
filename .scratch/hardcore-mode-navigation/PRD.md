@@ -4,15 +4,15 @@ UrgeShift currently behaves like a set of separate prototype pages instead of on
 
 ## Solution
 
-Add a shared MVP tab bar with five destinations: `Shift`, `ธูติ`, `Preview`, `Plans`, and `Progress`. Keep the core UrgeShift urge-interruption flow privacy-first and session-light, while introducing Hardcore Mode as an opt-in, device-local layer with a Local Name, Scheduled Check-In, Progress Board, and collapsible MVP Metrics. Use one local event model to power both user-facing progress and judge-facing demo metrics without requiring a backend account.
+Add a shared MVP tab bar with five destinations: `Shift`, `ภูติ`, `Preview`, `Plans`, and `Progress`. Keep the core UrgeShift urge-interruption flow privacy-first and session-light, while introducing Hardcore Mode as an opt-in, device-local layer with a Local Name, Scheduled Check-In, Progress Board, and collapsible MVP Metrics. Use one local event model to power both user-facing progress and judge-facing demo metrics without requiring a backend account.
 
 ## User Stories
 
 1. As a user in an urge moment, I want every page to feel like one app, so that I do not feel like I am jumping between disconnected demos.
 2. As a user in an active urge session, I want the tab bar to remain visible but guarded, so that I stay oriented without accidentally abandoning the session.
 3. As a user who skips onboarding, I want `Shift` to remain useful without any persistent setup, so that the core product still works at the highest-friction moment.
-4. As a user who wants a support persona, I want a `ธูติ` tab for the Background Quiz, so that I can shape how the app helps me later.
-5. As a user who completed the quiz, I want `Preview` to show my `ธูติประจำตัว` and near-term Better Self Preview states, so that I can visualize a believable next step.
+4. As a user who wants a support persona, I want a `ภูติ` tab for the Background Quiz, so that I can shape how the app helps me later.
+5. As a user who completed the quiz, I want `Preview` to show my `ภูติประจำตัว` and near-term Better Self Preview states, so that I can visualize a believable next step.
 6. As a user who found something helpful, I want `Plans` to hold printable saved plans, so that I can reuse what helped without needing an account.
 7. As a hardcore user, I want to choose a Local Name on my device, so that the app can address me personally without collecting backend identity.
 8. As a hardcore user, I want a short Scheduled Check-In, so that I can build a repeatable rhythm outside urge moments.
@@ -30,7 +30,7 @@ Add a shared MVP tab bar with five destinations: `Shift`, `ธูติ`, `Previ
 - Add a device-local Hardcore Mode store with two responsibilities: a Local Name/profile record and an append-only event log for progress and demo metrics.
 - Use one derived metrics layer on top of local events. The same event stream powers both Progress Board and collapsible MVP Metrics, but the two surfaces present different readouts.
 - Represent Scheduled Check-In as a three-step, structured self-check-in with support preference and tiny-goal selection. It is user-controlled and explicitly not passive sensing.
-- Keep the existing quiz result in session storage, but allow Progress to read the current `ธูติ` result opportunistically for personalization when available.
+- Keep the existing quiz result in session storage, but allow Progress to read the current `ภูติ` result opportunistically for personalization when available.
 - Treat plan follow-through as an explicit user action from `Plans`, not an inference.
 - Soft-lock non-`Shift` tab navigation during an active urge session by intercepting navigation and requiring a user confirmation to exit the session.
 - Reuse current shell patterns and visual language rather than introducing a second design system for Hardcore Mode.
@@ -57,4 +57,4 @@ Add a shared MVP tab bar with five destinations: `Shift`, `ธูติ`, `Previ
 
 - `Progress` should feel supportive first and analytical second.
 - `MVP Metrics` must stay clearly secondary in the UI, even though they share the same local event model.
-- `fairy` should not re-enter the canonical product language; the UI term remains `ธูติ`, shorthand for `ธูติประจำตัว`.
+- `fairy` should not re-enter the canonical product language; the UI term remains `ภูติ`, shorthand for `ภูติประจำตัว`.

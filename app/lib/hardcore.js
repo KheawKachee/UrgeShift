@@ -3,7 +3,7 @@ const CONTEXT_KEY = "urgeshift-user-context";
 
 export const HARDCORE_TABS = [
   { href: "/", label: "Shift" },
-  { href: "/context", label: "ธูติ" },
+  { href: "/context", label: "ภูติ" },
   { href: "/preview", label: "Preview" },
   { href: "/plans", label: "Plans" },
   { href: "/progress", label: "Progress" }

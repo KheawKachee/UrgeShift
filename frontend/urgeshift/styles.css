@@ -127,8 +127,8 @@ a {
 
 .brand-row h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 5vw, 5.7rem);
-  line-height: 0.92;
+  font-size: clamp(1.7rem, 3.6vw, 4rem);
+  line-height: 0.96;
   margin: 0;
   max-width: 12ch;
   letter-spacing: 0;
@@ -272,6 +272,12 @@ a {
   transform: translateY(-1px);
 }
 
+.link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .timer-band {
   display: flex;
   justify-content: space-between;
@@ -402,8 +408,8 @@ a {
   max-width: 11ch;
   margin: 0 0 16px;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 7rem);
-  line-height: 0.88;
+  font-size: clamp(2.1rem, 5.8vw, 4.8rem);
+  line-height: 0.92;
   letter-spacing: 0;
 }
 
@@ -649,8 +655,8 @@ a {
 .quiz-hero h1 {
   max-width: 9ch;
   margin: 0 0 16px;
-  font-size: clamp(3rem, 10vw, 7.2rem);
-  line-height: 0.88;
+  font-size: clamp(2.2rem, 6.2vw, 5rem);
+  line-height: 0.92;
 }
 
 .quiz-hero p:last-of-type {
@@ -752,10 +758,21 @@ a {
   gap: 16px;
 }
 
+.result-identity {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.result-spirit {
+  min-height: 280px;
+}
+
 .result-card h1 {
   margin: 0;
-  font-size: clamp(3rem, 10vw, 7rem);
-  line-height: 0.88;
+  font-size: clamp(2.2rem, 6vw, 4.8rem);
+  line-height: 0.92;
 }
 
 .result-card h2 {
@@ -900,10 +917,150 @@ a {
   font-weight: 700;
 }
 
+.progress-shell {
+  gap: 18px;
+}
+
+.progress-header {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.progress-card {
+  border: 1px solid rgba(20, 18, 15, 0.14);
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.progress-card h2,
+.checkin-flow h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+  margin: 0 0 10px;
+}
+
+.progress-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.progress-field {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 220px;
+}
+
+.progress-field span {
+  color: rgba(20, 18, 15, 0.58);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.progress-inline input,
+.progress-card select {
+  min-height: 46px;
+  border: 1px solid rgba(20, 18, 15, 0.18);
+  border-radius: 14px;
+  padding: 0 14px;
+  background: rgba(255, 255, 255, 0.38);
+  color: var(--ink);
+}
+
+.progress-inline button,
+.checkin-idle button,
+.metrics-toggle {
+  min-height: 46px;
+  border: 1px solid rgba(20, 18, 15, 0.2);
+  border-radius: 999px;
+  padding: 0 18px;
+  background: rgba(255, 255, 255, 0.42);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.progress-helper,
+.checkin-idle p {
+  color: rgba(20, 18, 15, 0.68);
+  line-height: 1.55;
+  margin: 10px 0 0;
+}
+
+.progress-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.progress-step {
+  margin: 0 0 8px;
+  color: rgba(20, 18, 15, 0.58);
+  font-weight: 700;
+}
+
+.checkin-choices,
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.checkin-choices button {
+  min-height: 78px;
+  border: 1px solid rgba(20, 18, 15, 0.16);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: left;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.metric-grid div {
+  min-height: 96px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.metric-grid span {
+  color: rgba(20, 18, 15, 0.58);
+  font-size: 0.82rem;
+}
+
+.metric-grid strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+}
+
+.metric-grid--demo strong {
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+}
+
+.metrics-toggle.active,
+.checkin-idle button.active,
+.plan-actions button.active {
+  color: white;
+  background: var(--signal);
+  border-color: var(--signal);
+}
+
 .plans-header h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 7vw, 5.6rem);
-  line-height: 0.92;
+  font-size: clamp(2rem, 5vw, 4.2rem);
+  line-height: 0.95;
   margin: 0 0 12px;
 }
 
@@ -941,6 +1098,21 @@ a {
   gap: 14px;
 }
 
+.plan-print-groups {
+  display: none;
+}
+
+.plan-print-group {
+  display: grid;
+  gap: 12px;
+}
+
+.plan-print-group h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
 .empty-plan,
 .plan-card {
   border: 1px solid rgba(20, 18, 15, 0.14);
@@ -965,6 +1137,19 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.plan-cadence-field {
+  display: grid;
+}
+
+.plan-cadence-field select {
+  min-height: 44px;
+  border: 1px solid rgba(20, 18, 15, 0.2);
+  border-radius: 999px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .button-grid button:hover,
@@ -1149,11 +1334,11 @@ a {
 
 .app-tabbar {
   position: sticky;
-  bottom: max(12px, env(safe-area-inset-bottom));
+  top: 12px;
   z-index: 12;
   width: min(100%, 760px);
   justify-self: center;
-  margin-top: 8px;
+  margin-bottom: 8px;
   padding: 8px;
   border-radius: 26px;
   border: 1px solid rgba(20, 18, 15, 0.12);
@@ -1275,8 +1460,12 @@ a {
     display: grid;
   }
 
+  .progress-grid,
   .quiz-choices,
-  .trait-grid {
+  .trait-grid,
+  .result-identity,
+  .checkin-choices,
+  .metric-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1294,9 +1483,7 @@ a {
   }
 
   .app-tabbar {
-    left: 0;
-    right: 0;
-    bottom: max(8px, env(safe-area-inset-bottom));
+    top: 8px;
     border-radius: 22px;
   }
 
@@ -1329,12 +1516,17 @@ a {
   }
 
   .quiz-nav,
+  .app-tabbar,
   .plans-header-actions,
   .plan-tabs,
   .plan-actions,
   .quiz-actions,
   .trait-grid,
   .prompt-box {
+    display: none !important;
+  }
+
+  .share-copy {
     display: none !important;
   }
 
@@ -1362,5 +1554,25 @@ a {
   .print-schedule {
     break-inside: avoid;
     background: white;
+  }
+
+  .result-spirit {
+    min-height: 220px;
+    background: white;
+    border: 1px solid rgba(20, 18, 15, 0.14);
+  }
+
+  .plan-list--screen,
+  .empty-plan {
+    display: none !important;
+  }
+
+  .plan-print-groups {
+    display: grid !important;
+    gap: 18px;
+  }
+
+  .plan-print-group {
+    break-inside: avoid;
   }
 }
