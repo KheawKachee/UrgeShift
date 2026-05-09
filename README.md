@@ -1,5 +1,7 @@
 # Luma
 
+<img width="717" height="841" alt="image" src="https://github.com/user-attachments/assets/40f5bb95-5cca-436a-bdd2-67e9a4dd91db" />
+
 Luma is a Next.js prototype for **UrgeShift**: a Thai-primary, privacy-first urge interruption app.
 
 Core idea:
