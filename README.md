@@ -1,4 +1,4 @@
-# **UrgeShift**:
+# **UrgeShift**
 
  A Thai-primary, privacy-first urge interruption app.
 
